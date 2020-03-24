@@ -1,12 +1,33 @@
 const express = require('express');
+const crypto = require('crypto');
+const connection = require('./database/connection');
 
 const routes = express.Router();
 
-routes.get('/',function(req,res){
-    res.json({
-        evento: "Semana Omnistack",
-        aluno: "Antonio Vinicius da Costa"
+//Listagem
+
+routes.get('/ongs', async function(req,res){
+    const ongs = await connection('ongs').select('*');
+    return res.json(ongs);
+})
+
+//Cadastro
+
+routes.post('/ongs', async function(req,res){
+    const { name, email, whatsapp, city, uf } = req.body;
+  
+    const id = crypto.randomBytes(4).toString('HEX');
+
+    await connection('ongs').insert({
+        id,
+        name,
+        email,
+        whatsapp,
+        city,
+        uf,
     });
+
+    return res.json({id});
 });
 
 module.exports = routes;
