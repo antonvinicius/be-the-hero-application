@@ -5,6 +5,12 @@ import { FiArrowLeft } from 'react-icons/fi'
 import './style.css';
 import logosImg from '../../assets/logo.svg'
 
+import api from '../../services/Api';
+
+function handleRegister(e){
+    e.preventDefault();
+}
+
 function Register() {
     return (
         <div className="register-container">
@@ -19,7 +25,7 @@ function Register() {
                         Não tenho cadastro
                     </Link>
                 </section>
-                <form>
+                <form onSubmit={handleRegister}>
                     <input placeholder="Nome da ONG"/>
                     <input type="email" placeholder="E-mail"/>
                     <input placeholder="Whatsapp"/>
